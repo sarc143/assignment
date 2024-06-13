@@ -1,0 +1,10 @@
+<ul>
+    {% for reportee in reportees %}
+        <li>
+            {{ reportee.employee.first_name }} {{ reportee.employee.last_name }} - {{ reportee.employee.title }}
+            {% if reportee.reportees %}
+                {% include "reportees.html" with reportees=reportee.reportees %}
+            {% endif %}
+        </li>
+    {% endfor %}
+</ul>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Employees Managed by {{ manager.first_name }} {{ manager.last_name }}</title>
+    <style>
+        ul { list-style-type: none; }
+        li { margin-left: 20px; }
+    </style>
+</head>
+<body>
+    <h1>Employees Managed by {{ manager.first_name }} {{ manager.last_name }}</h1>
+    <ul>
+        {% for reportee in reportees %}
+            <li>
+                {{ reportee.employee.first_name }} {{ reportee.employee.last_name }} - {{ reportee.employee.title }}
+                {% if reportee.reportees %}
+                    <ul>
+                        {% for sub_reportee in reportee.reportees %}
+                            <li>
+                                {{ sub_reportee.employee.first_name }} {{ sub_reportee.employee.last_name }} - {{ sub_reportee.employee.title }}
+                                {% if sub_reportee.reportees %}
+                                    {% include "reportees.html" with reportees=sub_reportee.reportees %}
+                                {% endif %}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+{{ manager.first_name }} {{ manager.last_name}} is managed by {{ manager.manager }}
+</body>
+</html>
